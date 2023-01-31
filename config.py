@@ -19,9 +19,11 @@
 from libqtile import bar, layout, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
+#from libqtile.utils import guess_terminal
 
 from widgets.volume.volume_widget import VolumeStatus, increace_volume
+from widgets.memory.memory_widget import MemoryStatus
+
 
 import os
 import subprocess
@@ -33,6 +35,23 @@ browser = "google-chrome"
 
 second_monitor = True
 
+
+groupbox_colors = {
+    "this_current_screen_border": "A50113",
+    "this_other_screen_border": "211D21",
+    "active": "FFFFFF",
+    "inactive": "808080",
+    "spacing": 15,
+    "rounded": False
+
+}
+
+group_settings = {
+        "": 0
+}
+
+
+
 @hook.subscribe.startup
 def autostart():
     home=os.path.expanduser('~/.config/qtile/autostart.sh')
@@ -41,9 +60,9 @@ def autostart():
 
 keys = [
 
-    Key([mod, 'shift'], "w",
-       lazy.to_screen(0)),
     Key([mod, 'shift'], "q",
+       lazy.to_screen(0)),
+    Key([mod, 'shift'], "w",
       lazy.to_screen(1)),
 
     # A list of available commands that can be bound to keys can be found
@@ -120,27 +139,29 @@ keys.extend([
 
 
 
+group_keys = [i for i in "1234567"]
+group_names = ["main", "code", "browser", "messages", "work", "music", "stuff"]
+group_icons = ["", "", "", "", "", "", ""]
 
 
+groups = [Group(name=group_names[i], label=group_icons[i]) for i in range(len(group_keys))]
 
-groups = [Group(i) for i in "123456"]
-
-for i in groups:
+for name, key in zip(group_names, group_keys):
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                key,
+                lazy.group[name].toscreen(),
+                desc="Switch to group {}".format(name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                key,
+                lazy.window.togroup(name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -167,8 +188,8 @@ layouts = [
 
 widget_defaults = dict(
     font="sans",
-    fontsize=12,
-    padding=3,
+    fontsize=16,
+    padding=5,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -180,10 +201,12 @@ screens = [
             [
                 keyboard,
                 volume,
+                MemoryStatus(),
                 #widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(**groupbox_colors),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.Battery(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -198,7 +221,8 @@ screens = [
                 widget.Clock(format="%H:%M"),
                 widget.QuickExit(),
             ],
-            24,
+            30,
+            background="211D21"
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -245,10 +269,10 @@ if second_monitor:
         wallpaper="~/Pictures/a.png",
         wallpaper_mode='fill',
 
-        bottom=bar.Bar([
-            widget.GroupBox(),
+        top=bar.Bar([
+            widget.GroupBox(**groupbox_colors),
             widget.WindowName(),
-        ], 24),
+        ], 30),
         )
 
     )
