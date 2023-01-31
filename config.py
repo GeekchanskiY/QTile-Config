@@ -23,7 +23,7 @@ from libqtile.lazy import lazy
 
 from widgets.volume.volume_widget import VolumeStatus, increace_volume
 from widgets.memory.memory_widget import MemoryStatus
-
+from widgets.battery.battery_widget import BatteryWidget
 
 import os
 import subprocess
@@ -33,7 +33,7 @@ mod = "mod4"
 terminal = "kitty"
 browser = "google-chrome"
 
-second_monitor = True
+second_monitor = False
 
 
 groupbox_colors = {
@@ -202,6 +202,7 @@ screens = [
                 keyboard,
                 volume,
                 MemoryStatus(),
+                BatteryWidget(),
                 #widget.CurrentLayout(),
                 widget.GroupBox(**groupbox_colors),
                 widget.Prompt(),
