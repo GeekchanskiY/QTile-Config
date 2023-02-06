@@ -1,3 +1,3 @@
 #!/bin/sh
 
-~/repos/picom/build/src/picom
+~/repos/old_picom/build/src/picom

@@ -24,7 +24,7 @@ from libqtile.lazy import lazy
 from widgets.volume.volume_widget import VolumeStatus, increace_volume
 from widgets.memory.memory_widget import MemoryStatus
 from widgets.battery.battery_widget import BatteryWidget
-
+from widgets.docker.docker_widget import DockerStatus
 import os
 import subprocess
 
@@ -42,7 +42,7 @@ groupbox_colors = {
     "active": "FFFFFF",
     "inactive": "808080",
     "spacing": 15,
-    "rounded": False
+    "rounded": True
 
 }
 
@@ -203,11 +203,12 @@ screens = [
                 volume,
                 MemoryStatus(),
                 BatteryWidget(),
+                DockerStatus(),
                 #widget.CurrentLayout(),
                 widget.GroupBox(**groupbox_colors),
                 widget.Prompt(),
-                widget.WindowName(),
-                widget.Battery(),
+                #widget.WindowName(),
+                #widget.Battery(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -223,7 +224,7 @@ screens = [
                 widget.QuickExit(),
             ],
             30,
-            background="211D21"
+            background="211D21", opacity=0.7
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
