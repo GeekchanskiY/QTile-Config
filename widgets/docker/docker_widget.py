@@ -10,8 +10,10 @@ class DockerStatus(widget.base.InLoopPollText):
         self.add_defaults(DockerStatus.defaults)
         
     def tick(self):
-        self.update(self.get_memory_usage())
+        self.update(self.get_docker_containers())
 
-    def get_memory_usage(self):
+    def get_docker_containers(self):
         
-        return str(len(str(check_output('docker container ps -a', shell=True)).split('\\n')))
+        containers = str(check_output('docker container ps -a', shell=True)).split('\\n')
+        containers = containers[1:len(containers) - 1]
+        return str(len(containers))
