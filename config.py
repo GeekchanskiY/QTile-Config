@@ -207,7 +207,7 @@ screens = [
                 keyboard,
                 volume,
                 MemoryStatus(colorscheme),
-                BatteryWidget(),
+                BatteryWidget(colorscheme),
                 DockerStatus(),
                 #widget.CurrentLayout(),
                 widget.GroupBox(**groupbox_colors),
