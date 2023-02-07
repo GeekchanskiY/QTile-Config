@@ -27,20 +27,20 @@ class MemoryStatus(widget.base.InLoopPollText):
         self.add_defaults(MemoryStatus.defaults)
         
     def tick(self):
-        self.update(self.get_memory_usage())
+        self.update(self._get_memory_usage())
 
-    def get_memory_usage(self):
+    def _get_memory_usage(self):
 
         # TODO: check other color change solutions
 
         memory_usage = get_memory_usage()
-        usage_percent = round((int(memory_usage["free"])/int(memory_usage["total"])) * 100, 2)
+        usage_percent = round((int(memory_usage["free"])/int(memory_usage["total"])) * 100, 1)
         if usage_percent > 80:
-            self.color = self.colorscheme.status_color_bad
+            self.color = self.colorscheme.status_color_good
         elif usage_percent > 50 and usage_percent <= 80:
             self.color = self.colorscheme.status_color_ok
         else: 
-            self.color = self.colorscheme.status_color_good
+            self.color = self.colorscheme.status_color_bad
 
         self.layout = self.drawer.textlayout(
             self.formatted_text,
@@ -50,6 +50,6 @@ class MemoryStatus(widget.base.InLoopPollText):
             self.fontshadow,
             markup=self.markup,
         )
-        return str(usage_percent)
+        return "Mem: " + str(usage_percent) + "%"
 
 
