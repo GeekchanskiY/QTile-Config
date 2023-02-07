@@ -37,7 +37,7 @@ browser = "google-chrome"
 
 second_monitor = False
 
-colorscheme = Colorscheme('3D1766', '6F1AB6', 'FF0032', '228B22', 'ffffff')
+colorscheme = Colorscheme('282828', '6F1AB6', 'FF0032', '228B22', 'ffffff')
 
 
 groupbox_colors = {
@@ -228,7 +228,7 @@ screens = [
                 widget.QuickExit(),
             ],
             30,
-            background=colorscheme.primary_color, opacity=0.7
+            background=colorscheme.primary_color, opacity=0.9
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
