@@ -23,11 +23,10 @@ class VolumeStatus(widget.TextBox):
 
         super().__init__(f"{self.volume}%", **config)
         self.name = "VolumeStatus"
-        self.color = ""
 
     def plus_volume(self, value=10):
         increace_volume(value)
-        self.update(f"\033[1;32;40m {check_volume()}%")
+        self.update(f"{check_volume()}%")
 
     def minus_volume(self, value=10):
         increace_volume(-value)
