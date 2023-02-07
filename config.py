@@ -39,6 +39,7 @@ second_monitor = False
 
 colorscheme = Colorscheme('282828', '6F1AB6', 'FF0032', '228B22', 'ffffff')
 
+second_monitor_command = "xrandr --output HDMI-1-1 --mode 1920x1080 --right-of eDP-1"
 
 groupbox_colors = {
     "this_current_screen_border": "A50113",
@@ -145,7 +146,7 @@ keys.extend([
 
 group_keys = [i for i in "1234567"]
 group_names = ["main", "code", "browser", "messages", "work", "music", "stuff"]
-group_icons = ["", "", "", "", "", "", ""]
+group_icons = ["", "", "", "", "", "", ""]
 
 
 groups = [Group(name=group_names[i], label=group_icons[i]) for i in range(len(group_keys))]
@@ -191,9 +192,9 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="FontAwesome, Regular",
     fontsize=16,
-    padding=5,
+    padding=7,
 )
 extension_defaults = widget_defaults.copy()
 
